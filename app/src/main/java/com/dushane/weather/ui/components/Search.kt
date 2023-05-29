@@ -29,7 +29,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.dushane.weather.HomeViewModel
 import com.dushane.weather.R
 import java.util.function.Consumer
 
@@ -57,7 +56,7 @@ fun Search() {
                 Icon(
                     imageVector = Icons.Default.Search,
                     contentDescription = null,
-                    tint = Color.Blue,
+                    tint = Color.Black,
                     modifier = Modifier
                 )
             },
@@ -67,6 +66,7 @@ fun Search() {
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             keyboardActions = KeyboardActions(
                 onDone = {
+                    //This  is wherre I viewModel data gets update and its new values enter the state
                     val locData = homeViewModel.getLocationResults(searchText.text)
                     if (!locData.results.isEmpty()) {
                         homeViewModel.getWeatherResults(
@@ -74,6 +74,7 @@ fun Search() {
                             locData.results[0].geometry?.location?.lng?.toInt().toString()
                         )
                     }
+                    // I use shared preference for proper rendering logic and initial app loading logic
                     sharedPref.edit().putString("openningLoc", searchText.text).commit()
                     sharedPref.edit().putBoolean("doAutoload", false).commit()
                 },
@@ -87,6 +88,8 @@ fun Search() {
         IconButton(
             onClick =
             {
+                //Incase the user rejects the permission I ask them for it again before doing any
+                // logic using location
                 if (ActivityCompat.checkSelfPermission(
                         context,
                         Manifest.permission.ACCESS_FINE_LOCATION
@@ -116,6 +119,7 @@ fun Search() {
                             null,
                             context.mainExecutor,
                             Consumer {
+                                //This is where the the function call is made and I update the state
                                 homeViewModel.getWeatherResults(
                                     it.latitude.toInt().toString(),
                                     it.longitude.toInt().toString()

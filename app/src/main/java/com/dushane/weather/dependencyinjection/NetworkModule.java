@@ -1,4 +1,4 @@
-package com.dushane.weather.data;
+package com.dushane.weather.dependencyinjection;
 
 import com.google.gson.Gson;
 
@@ -13,6 +13,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+//I wrote the modules in Java
 @Module
 @InstallIn(SingletonComponent.class)
 public class NetworkModule {
@@ -37,7 +38,7 @@ public class NetworkModule {
     public String provideBaseUrl() {
         return "https://api.openweathermap.org/data/3.0/";
     }
-//https://maps.googleapis.com/maps/api/geocode/
+
     @Singleton
     @Provides
     public Retrofit provideRetrofit(

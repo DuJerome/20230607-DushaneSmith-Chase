@@ -1,15 +1,16 @@
-package com.dushane.weather
+package com.dushane.weather.ui.components
 
 import androidx.lifecycle.ViewModel
+import com.dushane.weather.data.HomeRepository
 import com.dushane.weather.data.location.LocationResults
 import com.dushane.weather.data.weather.WeatherResults
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
+// View Model for homescreen, it gets latitude and longitude and retrieves weather data.
+// Provides state information for the compose Ui views to use
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val homeRepository: HomeRepository

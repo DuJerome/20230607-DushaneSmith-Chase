@@ -4,9 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
-import android.location.LocationManager
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
@@ -24,12 +22,10 @@ import androidx.core.app.ActivityCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-import com.dushane.weather.HomeViewModel
 import com.dushane.weather.data.weather.Daily
 import com.dushane.weather.data.weather.Hourly
 import com.dushane.weather.ui.theme.WeatherTheme
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.function.Consumer
 
 
 @AndroidEntryPoint
@@ -39,7 +35,7 @@ class Home : ComponentActivity() {
     1. it is a weather app browser that is functioning
     2. It has a search functionality, allowing you to look up addresses
         and zip codes allowing you to see weather information
-    3. Autoload last search term and show weather works
+    3. Autoload last search term and shows the weather
     4. Using the users location permission to populate weather data, WORKS!
     5. Bonus points: Compose, Unit Tests, Good design of app(MVVM architecture), SOLID principles,
         additional feature views of weather
@@ -61,11 +57,15 @@ class Home : ComponentActivity() {
     }
 }
 
+//Im using compose which means the majority of this app is in kotlin and I left the RxJava in Java
+//to satisfy that some of the app needs to be in java
 @Composable
 fun View() {
     val homeViewModel: HomeViewModel = viewModel()
     val context = LocalContext.current
     val sharedPref = (context as Activity).getPreferences(Context.MODE_PRIVATE)
+
+    // Ask the user for location permissions on app loading
     if (ActivityCompat.checkSelfPermission(
             context,
             Manifest.permission.ACCESS_FINE_LOCATION
@@ -84,6 +84,7 @@ fun View() {
         )
     }
 
+    //Conditional logic for loading the previous address results using shared preferences
     if (sharedPref.contains("openningLoc") && sharedPref.getBoolean("doAutoload", true)) {
         val data = homeViewModel.getLocationResults(sharedPref.getString("openningLoc", "")!!)
         homeViewModel.getWeatherResults(
@@ -107,7 +108,7 @@ fun View() {
 }
 
 
-
+// A horizontal list of hourly weather report elements
 @Composable
 fun HourlyList(list: List<Hourly>?) {
     Column(
@@ -151,6 +152,8 @@ fun DailyList(list: List<Daily>?) {
     }
 }
 
+//I use glide composable for loading the weather images and this is the Weather Item composable
+// described here
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalGlideComposeApi::class)
 @Composable
 fun HourlyWeatherItem(hourly: Hourly) {

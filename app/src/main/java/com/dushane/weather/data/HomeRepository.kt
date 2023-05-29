@@ -1,11 +1,11 @@
-package com.dushane.weather
+package com.dushane.weather.data
 
 import com.dushane.weather.data.location.LocationResults
-import com.dushane.weather.data.location.Results
 import com.dushane.weather.data.weather.WeatherResults
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
+//Repository for Home Screen View Model
 class HomeRepository @Inject constructor(
     private val weatherServices: WeatherServices,
     private val geocodeServices: GeocodeServices

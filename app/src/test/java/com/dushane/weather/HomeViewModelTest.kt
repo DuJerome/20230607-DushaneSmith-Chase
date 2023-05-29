@@ -1,12 +1,14 @@
 package com.dushane.weather
 
-import androidx.lifecycle.viewmodel.compose.viewModel
+import com.dushane.weather.data.GeocodeServices
+import com.dushane.weather.data.HomeRepository
+import com.dushane.weather.data.WeatherServices
+import com.dushane.weather.ui.components.HomeViewModel
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 
 internal class HomeViewModelTest {
 

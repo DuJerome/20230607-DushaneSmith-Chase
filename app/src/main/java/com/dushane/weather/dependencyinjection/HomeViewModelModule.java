@@ -1,4 +1,9 @@
-package com.dushane.weather;
+package com.dushane.weather.dependencyinjection;
+
+import com.dushane.weather.data.GeocodeServices;
+import com.dushane.weather.data.HomeRepository;
+import com.dushane.weather.ui.components.HomeViewModel;
+import com.dushane.weather.data.WeatherServices;
 
 import javax.inject.Singleton;
 
