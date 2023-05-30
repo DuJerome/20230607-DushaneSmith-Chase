@@ -10,6 +10,8 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
+//I only have two business logic function in my view model and my view model is the
+// only portion of the app with non-UI relate code so this is the entirety of my tests
 internal class HomeViewModelTest {
 
     private val retrofit = Retrofit.Builder()
