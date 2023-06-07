@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
@@ -97,10 +98,19 @@ fun View() {
     }
 
     val currentWeatherResults by homeViewModel.currentWeatherResults.collectAsState()
+    val currentLocationResults by homeViewModel.currentLocationResults.collectAsState()
+    val location = currentLocationResults.results[0].formattedAddress
     Column(
         modifier = Modifier.verticalScroll(rememberScrollState())
     ) {
         Search()
+        if(location != null){
+            Text(
+                text = location,
+                modifier = Modifier.padding(8.dp),
+                fontSize = 19.sp
+            )
+        }
         CurrentWeather(currentWeather = currentWeatherResults.current)
         HourlyList(list = currentWeatherResults.hourly)
         DailyList(list = currentWeatherResults.daily)
